@@ -1,20 +1,70 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
-  <title>Segundou na Várzea FC</title>
+  <title>Segundona na Várzea</title>
+  <link rel="stylesheet" href="estilo.css" />
 </head>
 <body>
-  <h1>Segundou na Várzea FC</h1>
-  <p>Bem-vindo ao Web App da nossa pelada!</p>
+  <h1>🏐 Segundona na Várzea</h1>
+
+  <section id="presenca">
+    <h2>✅ Painel de Presença</h2>
+    <input type="text" id="nomePresenca" placeholder="Digite seu nome" />
+    <button onclick="confirmarPresenca()">Confirmar Presença</button>
+    <ul id="listaPresenca"></ul>
+  </section>
+
+  <section id="ranking-geral">
+    <h2>📊 Ranking Geral</h2>
+    <ol id="rankingGeral"></ol>
+  </section>
+
+  <section id="artilharia">
+    <h2>🎯 Artilharia & Assistências</h2>
+    <ul id="rankingArtilharia"></ul>
+  </section>
+
+  <section id="craque">
+    <h2>🧢 Craque da Rodada</h2>
+    <p id="craqueRodada">Nenhum ainda</p>
+  </section>
+
+  <section id="caixa">
+    <h2>🧾 Caixa da Pelada</h2>
+    <p id="saldo">Saldo: R$ 0,00</p>
+  </section>
+
+  <section id="historico">
+    <h2>🧠 Histórico de Partidas</h2>
+    <ul id="historicoPartidas"></ul>
+  </section>
+
+  <section id="upload-fotos">
+    <h2>📸 Fotos da Rodada</h2>
+    <input type="file" accept="image/*" onchange="mostrarFoto(event)" />
+    <div id="galeria"></div>
+  </section>
+
+  <section id="sorteio">
+    <h2>🔀 Sorteio de Times</h2>
+    <button onclick="sortearTimes()">Sortear Times</button>
+    <div id="timesSorteados"></div>
+  </section>
+
+  <section id="votacao-craque">
+    <h2>🗳️ Votação Craque da Rodada</h2>
+    <input type="text" id="votoNome" placeholder="Digite o nome do craque" />
+    <button onclick="votarCraque()">Votar</button>
+    <ul id="votosCraque"></ul>
+  </section>
+
+  <section id="admin">
+    <h2>🛠️ Painel de Admin</h2>
+    <p>(Exemplo simples: inserir dados manualmente nos rankings)</p>
+  </section>
+
   <script src="app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-    }
-  </script>
 </body>
 </html>
