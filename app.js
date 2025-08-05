@@ -1,0 +1,1 @@
+console.log('Segundou na Várzea FC App iniciado!');
