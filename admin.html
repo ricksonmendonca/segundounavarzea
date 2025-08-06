@@ -1,38 +1,39 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Administração - Segundou na Várzea</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <h2>Painel Administrativo</h2>
-  <input type="password" id="senha" placeholder="Digite a senha" />
-  <button onclick="login()">Entrar</button>
-  <div id="painel" style="display:none;">
-    <textarea id="dados" rows="20" cols="80"></textarea><br/>
-    <button onclick="salvar()">Salvar</button>
-  </div>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Segundou</title>
+  <link rel="stylesheet" href="styles.css" />
   <script>
-    const senhaCorreta = "varzea2025";
-    async function login() {
-      const senha = document.getElementById("senha").value;
-      if (senha === senhaCorreta) {
-        document.getElementById("painel").style.display = "block";
+    function login() {
+      const senha = document.getElementById('senha').value;
+      if (senha === 'varzea2025') {
+        document.getElementById('form-container').style.display = 'block';
+        document.getElementById('login').style.display = 'none';
       } else {
-        alert("Senha incorreta!");
+        alert('Senha incorreta');
       }
     }
-    async function salvar() {
-      const dados = document.getElementById("dados").value;
-      const blob = new Blob([dados], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "ranking.json";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
   </script>
+</head>
+<body>
+  <header>
+    <h1>Painel Administrativo</h1>
+  </header>
+
+  <main>
+    <div id="login">
+      <p>Digite a senha para acessar o painel:</p>
+      <input type="password" id="senha" placeholder="Senha"/>
+      <button onclick="login()">Entrar</button>
+    </div>
+
+    <div id="form-container" style="display:none;">
+      <p>Aqui você poderá editar os rankings manualmente.</p>
+      <!-- Espaço reservado para futura edição direta -->
+    </div>
+  </main>
 </body>
 </html>
