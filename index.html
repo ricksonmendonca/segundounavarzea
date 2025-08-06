@@ -1,25 +1,139 @@
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Segundou na Várzea FC</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Segundou na Várzea FC</title>
+  <style>
+    body { background-color: #000; color: #FFD700; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    button { background-color: #FFD700; color: #000; border: none; padding: 10px 20px; margin: 10px; font-size: 16px; cursor: pointer; border-radius: 8px; }
+    button:hover { background-color: #e5c100; }
+    .team, .admin-section, .caixa-admin { background-color: #111; padding: 20px; margin: 20px auto; border-radius: 10px; width: 80%; text-align: left; color: #FFD700; }
+    input, select { padding: 5px; margin: 5px; }
+    ul { list-style: none; padding: 0; }
+    .hidden { display: none; }
+    img.logo { width: 200px; margin-bottom: 20px; }
+  </style>
 </head>
 <body>
-    <img src="logo.png" alt="Logo Segundou na Várzea" width="150">
-    <h1>Segundou na Várzea FC</h1>
-    <ul>
-        <li>✅ Painel de presença</li>
-        <li>📊 Ranking geral</li>
-        <li>🎯 Artilharia e assistências</li>
-        <li>🧢 Craque da rodada</li>
-        <li>🧾 Caixa da pelada</li>
-        <li>🧠 Histórico de partidas</li>
-        <li>📸 Upload de fotos</li>
-        <li>🔀 Sorteio de times</li>
-        <li>🗳️ Votação para craque da rodada</li>
-        <li>🛠️ Painel de admin</li>
-    </ul>
+  <img src="logo.png" class="logo" alt="Logo Segundou na Várzea">
+  <h1>Segundou na Várzea ⚽</h1>
+
+  <button onclick="showAdminLogin()">⚙️ Painel Admin</button>
+
+  <div id="admin-login" class="admin-section hidden">
+    <h2>🔐 Digite a senha de administrador</h2>
+    <input type="password" id="admin-password" placeholder="Senha">
+    <button onclick="checkAdmin()">Entrar</button>
+  </div>
+
+  <div id="admin-panel" class="admin-section hidden">
+    <h2>🛠️ Painel Administrativo</h2>
+
+    <h3>👤 Jogadores</h3>
+    <input id="new-player" placeholder="Nome do jogador">
+    <button onclick="addPlayer()">Adicionar jogador</button>
+    <ul id="players-list"></ul>
+
+    <h3>🎯 Artilharia / Assistências</h3>
+    <div id="gols-assists"></div>
+
+    <h3>📊 Ranking Geral</h3>
+    <div id="ranking-geral"></div>
+
+    <h3 class="caixa-admin hidden">💰 Caixa da Pelada</h3>
+    <div id="caixa" class="caixa-admin hidden">
+      <input type="text" id="descricao-mov" placeholder="Descrição">
+      <input type="number" id="valor-mov" placeholder="Valor">
+      <select id="tipo-mov">
+        <option value="entrada">Entrada</option>
+        <option value="saida">Saída</option>
+      </select>
+      <button onclick="adicionarMovimento()">Registrar</button>
+      <ul id="historico-caixa"></ul>
+    </div>
+  </div>
+
+<script>
+  const jogadores = [
+    "NICOLAS","RUAN","SENEGAL","RICKSON","MUNIZ","PEDRO QUEIROZ","ALMIRZINHO",
+    "MARCELINHO","ALVARO","PELANCA","JOÃO MARCOS","FIUZA","THALLES","LÉO","NEY",
+    "RONINHO","KEVIN","YAGO","MATHEU FARIA","GUERRON","PAULINHO","DENYS","PAULO",
+    "ÍTALO","JEFERSON","RENZO","CANJICA","DOUGLAS","SAVIO","PEDRO","DEDÉ","WASHINGTON",
+    "BERENGER","LUCAS AZEVEDO","RAFAEL"
+  ];
+
+  const adminSenha = "admin123";
+
+  function showAdminLogin() {
+    document.getElementById("admin-login").classList.remove("hidden");
+  }
+
+  function checkAdmin() {
+    const senha = document.getElementById("admin-password").value;
+    if (senha === adminSenha) {
+      document.getElementById("admin-panel").classList.remove("hidden");
+      document.querySelectorAll(".caixa-admin").forEach(e => e.classList.remove("hidden"));
+      document.getElementById("admin-login").classList.add("hidden");
+      renderJogadores();
+      renderEditaveis();
+    } else {
+      alert("Senha incorreta.");
+    }
+  }
+
+  function renderJogadores() {
+    const ul = document.getElementById("players-list");
+    ul.innerHTML = "";
+    jogadores.forEach((j, i) => {
+      const li = document.createElement("li");
+      li.textContent = j + " ";
+      const del = document.createElement("button");
+      del.textContent = "❌";
+      del.onclick = () => { jogadores.splice(i,1); renderJogadores(); };
+      li.appendChild(del);
+      ul.appendChild(li);
+    });
+  }
+
+  function addPlayer() {
+    const nome = document.getElementById("new-player").value.trim();
+    if (nome && !jogadores.includes(nome.toUpperCase())) {
+      jogadores.push(nome.toUpperCase());
+      document.getElementById("new-player").value = "";
+      renderJogadores();
+      renderEditaveis();
+    }
+  }
+
+  function renderEditaveis() {
+    const ga = document.getElementById("gols-assists");
+    const rg = document.getElementById("ranking-geral");
+    ga.innerHTML = "";
+    rg.innerHTML = "";
+    jogadores.forEach(j => {
+      ga.innerHTML += `
+        <div><strong>${j}</strong><br>
+          Gols: <input type='number' style='width:50px'><br>
+          Assistências: <input type='number' style='width:50px'><br>
+        </div><hr>`;
+      rg.innerHTML += `
+        <div><strong>${j}</strong> - Pontos: <input type='number' style='width:60px'><br></div>`;
+    });
+  }
+
+  function adicionarMovimento() {
+    const desc = document.getElementById("descricao-mov").value;
+    const val = parseFloat(document.getElementById("valor-mov").value);
+    const tipo = document.getElementById("tipo-mov").value;
+    if (desc && !isNaN(val)) {
+      const li = document.createElement("li");
+      li.textContent = `${tipo.toUpperCase()} - ${desc} - R$ ${val.toFixed(2)}`;
+      document.getElementById("historico-caixa").appendChild(li);
+      document.getElementById("descricao-mov").value = "";
+      document.getElementById("valor-mov").value = "";
+    }
+  }
+</script>
 </body>
 </html>
