@@ -1,33 +1,116 @@
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Segundou na Várzea FC</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <title>Segundou na Várzea FC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #FFD700;
+            color: #111;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #222;
+            color: #fff;
+            margin: 0 5px;
+            border: 2px solid #FFD700;
+        }
+        .tab.active {
+            background-color: #FFD700;
+            color: #111;
+        }
+        .content {
+            display: none;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 800px;
+        }
+        .content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #222;
+        }
+        th, td {
+            border: 1px solid #FFD700;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+        }
+        .player-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .player {
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Segundou na Várzea FC</h1>
-    <a href="admin.html" class="admin-link">Painel Admin</a>
-  </header>
-
-  <main>
-    <h2>Ranking Geral</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Jogador</th>
-          <th>PTS</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>NICOLAS</td><td>31</td></tr>
-        <tr><td>RUAN</td><td>23</td></tr>
-        <tr><td>SENEGAL</td><td>15</td></tr>
-      </tbody>
-    </table>
-  </main>
+    <header>
+        <h1>Segundou na Várzea FC</h1>
+    </header>
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('geral')">Ranking Geral</div>
+        <div class="tab" onclick="showTab('gols')">Artilharia</div>
+        <div class="tab" onclick="showTab('assistencias')">Assistências</div>
+    </div>
+    <div id="geral" class="content active">
+        <h2>Ranking Geral</h2>
+        <table>
+            <tr><th>Pos</th><th>Jogador</th><th>PTS</th></tr>
+            <tr><td>1º</td><td class="player"><img src="img/Nicolas.jpeg" class="player-img">NICOLAS</td><td>31</td></tr>
+            <tr><td>2º</td><td class="player"><img src="img/Ruan.jpeg" class="player-img">RUAN</td><td>23</td></tr>
+            <tr><td>3º</td><td class="player"><img src="img/SENEGAL.png" class="player-img">SENEGAL</td><td>15</td></tr>
+        </table>
+    </div>
+    <div id="gols" class="content">
+        <h2>Artilharia</h2>
+        <table>
+            <tr><th>Pos</th><th>Jogador</th><th>Gols</th></tr>
+            <tr><td>1º</td><td class="player"><img src="img/Nicolas.jpeg" class="player-img">NICOLAS</td><td>10</td></tr>
+            <tr><td>2º</td><td class="player"><img src="img/Ruan.jpeg" class="player-img">RUAN</td><td>8</td></tr>
+        </table>
+    </div>
+    <div id="assistencias" class="content">
+        <h2>Assistências</h2>
+        <table>
+            <tr><th>Pos</th><th>Jogador</th><th>Assistências</th></tr>
+            <tr><td>1º</td><td class="player"><img src="img/RICKSON.png" class="player-img">RICKSON</td><td>6</td></tr>
+            <tr><td>2º</td><td class="player"><img src="img/Thales.jpeg" class="player-img">THALLES</td><td>5</td></tr>
+        </table>
+    </div>
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelector('.tab[onclick="showTab(\'' + tabId + '\')"]').classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
 </body>
 </html>
