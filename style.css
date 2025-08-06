@@ -1,21 +1,6 @@
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #000;
-  color: #FFD700;
-  padding: 20px;
-}
-header {
-  background: #FFD700;
-  color: black;
-  padding: 10px;
-  text-align: center;
-}
-nav a {
-  color: black;
-  margin: 10px;
-  text-decoration: none;
-  font-weight: bold;
-}
-textarea {
-  width: 100%;
+    font-family: sans-serif;
+    background-color: #111;
+    color: #ffd700;
 }
