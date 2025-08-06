@@ -1,70 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Painel Admin - Segundou na Várzea</title>
-  <style>
-    body {
-      background-color: #000;
-      color: #FFD700;
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    input, textarea {
-      display: block;
-      margin-bottom: 10px;
-      padding: 5px;
-    }
-    label {
-      font-weight: bold;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-    }
-    button {
-      background: #FFD700;
-      border: none;
-      padding: 10px;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>Administração - Segundou na Várzea</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>⚙️ Painel de Administração</h1>
-
-    <form id="adminForm">
-      <h2>🏆 Ranking Geral</h2>
-      <label for="ranking">Lista (Top 5):</label>
-      <textarea id="ranking" rows="5">1. Jogador A - 10 pts...</textarea>
-
-      <h2>🎯 Artilharia / Assistências</h2>
-      <label for="gols">Gols:</label>
-      <textarea id="gols" rows="3">Jogador A - 5 gols...</textarea>
-      <label for="assistencias">Assistências:</label>
-      <textarea id="assistencias" rows="3">Jogador B - 3 assist...</textarea>
-
-      <h2>🧾 Caixa da Pelada</h2>
-      <label for="caixa">Entradas/Saídas:</label>
-      <textarea id="caixa" rows="4">+ R$20 - Jogador A</textarea>
-
-      <h2>🧠 Histórico de Partidas</h2>
-      <textarea id="historico" rows="4">Rodada 1: Time A 5x2 Time B</textarea>
-
-      <button type="submit">Salvar (localmente)</button>
-    </form>
+  <h2>Painel Administrativo</h2>
+  <input type="password" id="senha" placeholder="Digite a senha" />
+  <button onclick="login()">Entrar</button>
+  <div id="painel" style="display:none;">
+    <textarea id="dados" rows="20" cols="80"></textarea><br/>
+    <button onclick="salvar()">Salvar</button>
   </div>
-
   <script>
-    const form = document.getElementById('adminForm');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('Salvo apenas no navegador! Integração futura com backend ou GitHub necessária.');
-    });
+    const senhaCorreta = "varzea2025";
+    async function login() {
+      const senha = document.getElementById("senha").value;
+      if (senha === senhaCorreta) {
+        document.getElementById("painel").style.display = "block";
+      } else {
+        alert("Senha incorreta!");
+      }
+    }
+    async function salvar() {
+      const dados = document.getElementById("dados").value;
+      const blob = new Blob([dados], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "ranking.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
   </script>
 </body>
 </html>
